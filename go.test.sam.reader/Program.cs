@@ -46,7 +46,16 @@ namespace go.test.sam.reader
 
                 Console.WriteLine(readDB.firstRow(dt));
             }
-        }
+       
+    public static void dataFromJason2()
+        {
+
+        DataTable dt = (DataTable)JsonConvert.DeserializeObject(testData, (typeof(DataTable)));
+
+        Console.WriteLine(readDB.firstRow(dt));
+        } 
+
+    }
 
     
 }
