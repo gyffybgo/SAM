@@ -20,7 +20,7 @@ namespace go.test.sam.reader
             SqlConnection _con = new SqlConnection(ems_sql_cluster);
 
             connectToDB(sstring, _con, bb);
-
+            SqlConnection _con2 = _con;
             string testDataEmpty = "[]";
             DataTable dt = (DataTable)JsonConvert.DeserializeObject(testDataEmpty, (typeof(DataTable)));
              
