@@ -27,8 +27,14 @@ namespace go.test.sam.reader
 
         public static string firstRow(DataTable bb)
         {
-            string ut ="";
-            ut = $"Verdier: {bb.Rows[0][0]} og {bb.Rows[0][2]}";
+            string ut = "";
+            int rad = 0;
+            int kolonne = 0;
+            if (kolonne == 1)
+            {
+                throw new System.IndexOutOfRangeException("Kan ikke være 0");
+            }
+            ut = $"Verdier: {bb.Rows[rad][kolonne]} og {bb.Rows[rad][kolonne + 2]}";
             return ut;
         }
     }

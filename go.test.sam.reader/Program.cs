@@ -10,7 +10,16 @@ namespace go.test.sam.reader
 {
     class Program
     {
+        public static string testData = "[{ \"id\": 26582,\"index\": 0,\"guid\": \"9e1253e4-2dd0-433e-a191-84852f72f9b7\", \"isActive\": true, \"balance\": 1951},{\"id\": 22982,\"index\": 1,\"guid\": \"cbdbaa0b-4796-45dc-a1cd-52c3e6448156\",\"isActive\": false,\"balance\": 3379},{\"id\": 61311,\"index\": 2,\"guid\": \"8675fac1-53a9-4d09-9a9b-796104bfe912\",\"isActive\": false,\"balance\": 2900}]";
+
         public static void Main(string[] args)
+        {
+
+            //connectToDB();
+            dataFromJason();
+        }
+
+        public static void connectToDB()
         {
             DateTime startTid = DateTime.Now;
             DataTable bb = new DataTable("bbusdef");
@@ -19,36 +28,25 @@ namespace go.test.sam.reader
             string ems_sql_cluster = @"Data Source=bkksql06;Initial Catalog=dg10;Integrated Security=True";
             SqlConnection _con = new SqlConnection(ems_sql_cluster);
 
-            connectToDB(sstring, _con, bb);
-            SqlConnection _con2 = _con;
-            string testDataEmpty = "[]";
-            DataTable dt = (DataTable)JsonConvert.DeserializeObject(testDataEmpty, (typeof(DataTable)));
-             
-        }
-
-
-        public static void connectToDB(string sstring, SqlConnection _con, DataTable bb)
-        {
-            string json;
-            //using (SqlCommand _cmd = new SqlCommand(sstring, _con))
-            //{
-            //    //SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
-            //    //_con.Open();
-            //    //_dap.Fill(bb);
-            //    //_con.Close();
-            //    // readDB.printOut(bb);
-            //    Console.WriteLine(readDB.firstRow(bb));
-            //}
-            using (StreamReader r = new StreamReader("generated.json"))
+            using (SqlCommand _cmd = new SqlCommand(sstring, _con))
             {
-                 json = r.ReadToEnd();
-               
-            } 
-            DataTable items = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
-            Console.WriteLine(readDB.firstRow(items));
+                SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+                _con.Open();
+                _dap.Fill(bb);
+                _con.Close();
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(testData, (typeof(DataTable)));
 
+                Console.WriteLine(readDB.firstRow(dt));
+            }
+        }
+        public static void dataFromJason()
+        {
 
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(testData, (typeof(DataTable)));
+
+                Console.WriteLine(readDB.firstRow(dt));
+            }
         }
 
-    }
+    
 }
